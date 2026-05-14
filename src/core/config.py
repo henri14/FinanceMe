@@ -6,6 +6,7 @@ class Config(BaseModel):
     model: str
     api_key: str
     max_turns: int
+    use_rag: bool = True
 
 def load_config():
     with open('config/config.yaml') as f:

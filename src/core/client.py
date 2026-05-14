@@ -15,6 +15,10 @@ class ChatClient:
         self.db = Database("data/chat_history.db")
         self.model = self.config.model
         self.max_turns = self.config.max_turns
+        self._retriever = None
+        if self.config.use_rag:
+            from src.extensions.rag.retriever import Retriever
+            self._retriever = Retriever()
 
     async def start_chat(self):
         print(f"Starting chat with model={self.model}")
@@ -29,6 +33,19 @@ class ChatClient:
             messages = [
                 {"role": role, "content": content} for role, content in last_turns
             ]
+
+            if self._retriever is not None:
+                chunks, _ = self._retriever.query(user_input)
+                if chunks:
+                    context = "\n\n".join(
+                        f"[{i + 1}] ({c['doc_id']} — {c['section']})\n{c['text']}"
+                        for i, c in enumerate(chunks)
+                    )
+                    messages.insert(0, {
+                        "role": "system",
+                        "content": f"Use the following context to inform your answer. Cite sources as [1], [2], etc.\n\n{context}",
+                    })
+
             messages.append({"role": "user", "content": user_input})
 
             start = time.perf_counter()

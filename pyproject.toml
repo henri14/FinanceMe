@@ -16,4 +16,9 @@ dependencies = [
     "sentence-transformers>=2.0",
     "deepeval>=0.20",
     "pytest>=7.0",
+    "fastapi>=0.100",
+    "uvicorn>=0.23",
+    "lancedb>=0.5",
+    "prometheus-client>=0.17",
+    "python-multipart>=0.0.6",
 ]
