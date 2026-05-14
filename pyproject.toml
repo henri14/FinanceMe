@@ -1,0 +1,19 @@
+[project]
+name = "ai-chat-client"
+version = "0.1.0"
+description = "Simple LLM Chat Client"
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.0",
+    "pydantic>=2.0",
+    "typer>=0.9",
+    "loguru>=0.7",
+    "python-dotenv>=1.0",
+    "aiofiles>=23.0",
+    "uvloop>=0.17",
+    "langchain>=0.1",
+    "chromadb>=0.4",
+    "sentence-transformers>=2.0",
+    "deepeval>=0.20",
+    "pytest>=7.0",
+]
