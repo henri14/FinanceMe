@@ -11,6 +11,7 @@ TABLE_NAME = "chunks"
 MODEL_NAME = "all-MiniLM-L6-v2"
 BATCH_SIZE = 64
 MIN_CHUNK_CHARS = 50
+MAX_CHUNK_CHARS = 500
 
 
 def _parse_frontmatter(lines: list[str]) -> dict:
@@ -35,14 +36,16 @@ def _chunk_document(path: Path) -> list[dict]:
     current_lines: list[str] = []
 
     def flush(h2: str, h3: str, body_lines: list[str]):
-        body = "\n".join(body_lines).strip()
+        body = "\n".join(body_lines).strip()[:MAX_CHUNK_CHARS]
         if len(body) >= MIN_CHUNK_CHARS:
+            heading = " > ".join(filter(None, [meta["title"], h2, h3]))
+            text = f"{heading}\n\n{body}" if heading else body
             chunks.append({
                 "doc_id": meta["doc_id"],
                 "title": meta["title"],
                 "section": h2,
                 "subsection": h3,
-                "text": body,
+                "text": text,
                 "source_file": path.name,
             })
 

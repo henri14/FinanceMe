@@ -10,7 +10,7 @@ MODEL_NAME = "all-MiniLM-L6-v2"
 
 
 class Retriever:
-    def __init__(self, db_path: str = DB_PATH, top_k: int = 5):
+    def __init__(self, db_path: str = DB_PATH, top_k: int = 30):
         self.top_k = top_k
         self._model = SentenceTransformer(MODEL_NAME)
         db = lancedb.connect(db_path)
