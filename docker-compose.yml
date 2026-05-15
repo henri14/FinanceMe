@@ -1,0 +1,39 @@
+services:
+  vault:
+    build: .
+    entrypoint: ["/app/scripts/vault_entrypoint.sh"]
+    environment:
+      - OPENAI_API_KEY
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/metrics"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      vault:
+        condition: service_healthy
+
+  chat:
+    build: .
+    command: ["python", "src/cli.py", "chat"]
+    environment:
+      - OPENAI_API_KEY
+    volumes:
+      - ./data:/app/data
+    stdin_open: true
+    tty: true
+    depends_on:
+      vault:
+        condition: service_healthy
