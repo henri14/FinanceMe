@@ -90,6 +90,9 @@ class CopilotAgent:
             choice = response.choices[0]
             messages.append(choice.message)
 
+            if choice.message.content:
+                log.info(f"step {step}: reasoning: {choice.message.content}")
+
             if choice.finish_reason == "stop":
                 log.info(f"step {step}: model finished")
                 break
@@ -162,6 +165,7 @@ class CopilotAgent:
             )
             plan = result.choices[0].message.parsed
             log.info(f"plan extracted: status={plan.AgentStatus}")
+            log.info(f"agent reasoning: {plan.AgentReasoning}")
             return plan
         except Exception as exc:
             log.error(f"plan extraction failed: {exc}")
