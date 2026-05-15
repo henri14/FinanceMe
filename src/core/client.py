@@ -1,6 +1,9 @@
+import re
 import time
 
 from openai import OpenAI
+
+_APP_ID_RE = re.compile(r'\bA-\d+\b')
 
 from src.core.config import load_config
 from src.core.metrics import MetricsCollector
@@ -19,6 +22,7 @@ class ChatClient:
         if self.config.use_rag:
             from src.extensions.rag.retriever import Retriever
             self._retriever = Retriever()
+        self._copilot = None
 
     async def start_chat(self):
         print(f"Starting chat with model={self.model}")
@@ -28,6 +32,17 @@ class ChatClient:
                 print("Goodbye.")
                 break
             self.db.save_message("user", user_input)
+
+            match = _APP_ID_RE.search(user_input)
+            if match:
+                if self._copilot is None:
+                    from src.extensions.tools.agent import CopilotAgent
+                    self._copilot = CopilotAgent()
+                plan = self._copilot.run(app_id=match.group(), question=user_input)
+                text = f"[{plan.AgentStatus.upper()}]\n\n{plan.PlanText}"
+                print(f"Assistant: {text}")
+                self.db.save_message("assistant", text)
+                continue
 
             last_turns = self.db.get_last_turns(self.max_turns)
             messages = [
