@@ -21,5 +21,16 @@ def chat():
     asyncio.run(client.start_chat())
 
 
+@app.command()
+def copilot(
+    app_id: str = typer.Argument(..., help="Application ID, e.g. A-1423"),
+    question: str = typer.Argument(..., help="Question about the application"),
+):
+    """Run the Operations Copilot agent and print a structured action plan."""
+    from src.extensions.tools.agent import CopilotAgent
+    plan = CopilotAgent().run(app_id=app_id, question=question)
+    print(plan.model_dump_json(indent=2))
+
+
 if __name__ == "__main__":
     app()
