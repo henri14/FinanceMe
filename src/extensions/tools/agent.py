@@ -1,11 +1,15 @@
 import json
+import os
 from pathlib import Path
 
+import httpx
 from dotenv import load_dotenv
 from loguru import logger
 from openai import OpenAI
 
 load_dotenv()
+
+_VAULT_URL = os.getenv("VAULT_URL", "http://localhost:8000")
 
 Path("data").mkdir(exist_ok=True)
 logger.add(
@@ -17,7 +21,6 @@ logger.add(
 )
 
 from src.core.config import load_config
-from src.extensions.rag.retriever import Retriever
 from src.extensions.tools.models import AgentPlan
 from src.extensions.tools.tool_schemas import TOOL_SCHEMAS
 from src.tools.calendar_tool import get_next_slot
@@ -61,7 +64,6 @@ class CopilotAgent:
     def __init__(self) -> None:
         self.config = load_config()
         self.client = OpenAI(api_key=self.config.api_key)
-        self.retriever = Retriever()
 
     def run(self, app_id: str, question: str) -> AgentPlan:
         log = logger.bind(app_id=app_id)
@@ -128,16 +130,15 @@ class CopilotAgent:
             return app.to_dict()
 
         if name == "search_policy":
-            chunks, latency_ms = self.retriever.query(args["query"])
-            log.info(f"search_policy retrieved {len(chunks)} chunks in {latency_ms:.0f}ms")
-            return [
-                {
-                    "doc_id": c["doc_id"],
-                    "section": c["section"],
-                    "excerpt": c["text"][:400],
-                }
-                for c in chunks
-            ]
+            resp = httpx.post(
+                f"{_VAULT_URL}/ask",
+                json={"question": args["query"]},
+                timeout=30,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            log.info(f"search_policy vault answered in {data['retrieval_ms']:.0f}ms retrieval")
+            return {"answer": data["answer"], "citations": data["citations"]}
 
         if name == "get_next_slot":
             slot = get_next_slot(args["business_days_from_now"])

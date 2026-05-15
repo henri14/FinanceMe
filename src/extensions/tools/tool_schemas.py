@@ -26,6 +26,7 @@ TOOL_SCHEMAS = [
             "name": "search_policy",
             "description": (
                 "Search the Acme FinanceMe policy and SLA knowledge base using natural language. "
+                "Returns a synthesized answer with source citations. "
                 "Use this to look up verification SLAs, hardship procedures, contact rules, "
                 "fee schedules, regulatory requirements, and any other policy questions."
             ),

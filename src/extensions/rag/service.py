@@ -13,6 +13,7 @@ from prometheus_client import (
     CONTENT_TYPE_LATEST,
 )
 
+from src.core.config import load_config, Config
 from src.extensions.rag.models import AskRequest, AskResponse, Citation
 from src.extensions.rag.retriever import Retriever
 
@@ -31,6 +32,14 @@ _response_chars_total = Counter("rag_response_chars_total", "Total response char
 
 _retriever: Retriever | None = None
 _openai: OpenAI | None = None
+_config: Config | None = None
+
+
+def _get_config() -> Config:
+    global _config
+    if _config is None:
+        _config = load_config()
+    return _config
 
 
 def _get_retriever() -> Retriever:
@@ -50,6 +59,7 @@ def _get_openai() -> OpenAI:
 
 @app.on_event("startup")
 def _startup():
+    _get_config()
     _get_retriever()
     _get_openai()
 
@@ -73,7 +83,7 @@ def ask(req: AskRequest) -> AskResponse:
     )
 
     completion = _get_openai().chat.completions.create(
-        model="gpt-4o-mini",
+        model=_get_config().model,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": req.question},
