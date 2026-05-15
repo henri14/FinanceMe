@@ -1,10 +1,20 @@
 import json
+from pathlib import Path
 
 from dotenv import load_dotenv
 from loguru import logger
 from openai import OpenAI
 
 load_dotenv()
+
+Path("data").mkdir(exist_ok=True)
+logger.add(
+    "data/copilot_traces.jsonl",
+    filter=lambda r: r["name"].startswith("src.extensions.tools.agent"),
+    serialize=True,
+    rotation="10 MB",
+    retention=5,
+)
 
 from src.core.config import load_config
 from src.extensions.rag.retriever import Retriever
