@@ -1,30 +1,18 @@
 import asyncio
+import json
+from pathlib import Path
 
 import pytest
+from openai import OpenAI
 from ragas.metrics.collections import RougeScore
 
+from src.core.config import load_config
 from src.extensions.rag.models import AskRequest
 from src.extensions.rag.service import _get_retriever, ask
 
-QUESTIONS = [
-    ("What is the break-cost cap specified in clause 4.3(b) of the Lending Policy?",
-     "3 times the most recent monthly interest charge"),
-    ("What is the establishment fee for an Acme loan product?",
-     "$499"),
-    ("What action must be taken on day 7 of a hardship case per the Hardship Policy and SLA Handbook?",
-     "second reminder"),
-    ("What is the AFCA referral procedure for complaints per the Complaints Policy?",
-     "AFCA"),
-    ("What exact words does Gandalf say in the Silmaril Charter?", None),
-    ("Where was the One Ring forged according to the Silmaril Charter, and in what year?",
-     "Eregion"),
-    ("What is the minimum NPS threshold for broker accreditation?", None),
-    ("What are Acme's business hours and how do they relate to SLA calculations?",
-     "08:00"),
-    ("What is the cooling-off period for Acme loan agreements?",
-     "14 business days"),
-    ("What does the NCCP Act s.117 require of credit licensees?", None),
-]
+_QUESTIONS_FILE = Path(__file__).parent / "eval_questions.json"
+_raw = json.loads(_QUESTIONS_FILE.read_text())
+QUESTIONS = [(q["id"], q["question"], q["expected"]) for q in _raw]
 
 _rouge = RougeScore(rouge_type="rougeL", mode="recall")
 
@@ -36,8 +24,52 @@ async def _max_context_rouge(expected: str, contexts: list[str]) -> float:
     return max(r.value for r in results)
 
 
-@pytest.mark.parametrize("question,expected", QUESTIONS)
-def test_rag_question(question: str, expected: str | None):
+def _score_answer(answer: str, expected: str | None) -> int:
+    """Return 1 (pass) or 0 (fail). Non-empty answer passes when expected is None."""
+    if not answer.strip():
+        return 0
+    if expected is None:
+        return 1
+    result = asyncio.run(_rouge.ascore(reference=expected, response=answer))
+    return 1 if result.value >= 0.5 else 0
+
+
+def run_evaluation() -> list[dict]:
+    """Run each question against both the RAG service and the LLM alone.
+
+    Returns a list of dicts with keys: id, question, llm_score, rag_score.
+    """
+    config = load_config()
+    client = OpenAI(api_key=config.api_key)
+    retriever = _get_retriever()
+    results = []
+
+    for qid, question, expected in QUESTIONS:
+        # RAG path: retrieval + grounded generation via the vault service
+        rag_response = ask(AskRequest(question=question))
+        rag_score = _score_answer(rag_response.answer, expected)
+
+        # LLM-only path: direct call with no retrieval context
+        completion = client.chat.completions.create(
+            model=config.model,
+            messages=[{"role": "user", "content": question}],
+            temperature=0,
+        )
+        llm_answer = completion.choices[0].message.content.strip()
+        llm_score = _score_answer(llm_answer, expected)
+
+        results.append({
+            "id": qid,
+            "question": question,
+            "llm_score": llm_score,
+            "rag_score": rag_score,
+        })
+
+    return results
+
+
+@pytest.mark.parametrize("qid,question,expected", QUESTIONS, ids=[str(q["id"]) for q in _raw])
+def test_rag_question(qid: int, question: str, expected: str | None):
     chunks, retrieval_ms = _get_retriever().query(question)
     response = ask(AskRequest(question=question))
     contexts = [c["text"] for c in chunks]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_lending_policy.md"],
+    "section": "4",
+    "question": "What is the break-cost cap specified in clause 4.3(b) of the Lending Policy?",
+    "expected": "3 times the most recent monthly interest charge"
+  },
+  {
+    "id": 2,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_product_info.md"],
+    "section": "2",
+    "question": "What is the establishment fee for an Acme loan product?",
+    "expected": "$499"
+  },
+  {
+    "id": 3,
+    "category": "procedure",
+    "trick": false,
+    "source_docs": ["acme_hardship_policy.md"],
+    "section": "4",
+    "question": "What action must be taken on day 7 of a hardship case per the Hardship Policy and SLA Handbook?",
+    "expected": "second reminder"
+  },
+  {
+    "id": 4,
+    "category": "procedure",
+    "trick": false,
+    "source_docs": ["acme_complaints_policy.md"],
+    "section": "6",
+    "question": "What is the AFCA referral procedure for complaints per the Complaints Policy?",
+    "expected": "AFCA"
+  },
+  {
+    "id": 7,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_broker_accreditation.md"],
+    "section": "4",
+    "question": "What is the minimum NPS threshold for broker accreditation?",
+    "expected": null
+  },
+  {
+    "id": 8,
+    "category": "policy_lookup",
+    "trick": false,
+    "source_docs": ["acme_sla_handbook.md"],
+    "section": "1",
+    "question": "What are Acme's business hours and how do they relate to SLA calculations?",
+    "expected": "08:00"
+  },
+  {
+    "id": 9,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_lending_policy.md"],
+    "section": "4",
+    "question": "What is the cooling-off period for Acme loan agreements?",
+    "expected": "14 business days"
+  },
+  {
+    "id": 10,
+    "category": "regulatory",
+    "trick": false,
+    "source_docs": ["nccp_excerpt.md"],
+    "section": "6",
+    "question": "What does the NCCP Act s.117 require of credit licensees?",
+    "expected": null
+  }
+]
