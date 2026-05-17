@@ -30,6 +30,35 @@ services:
     command: ["python", "src/cli.py", "chat"]
     environment:
       - OPENAI_API_KEY
+      - VAULT_URL=http://vault:8000
+    volumes:
+      - ./data:/app/data
+    stdin_open: true
+    tty: true
+    depends_on:
+      vault:
+        condition: service_healthy
+
+  copilot:
+    build: .
+    command: ["python", "src/cli.py", "copilot"]
+    environment:
+      - OPENAI_API_KEY
+      - VAULT_URL=http://vault:8000
+    volumes:
+      - ./data:/app/data
+    stdin_open: true
+    tty: true
+    depends_on:
+      vault:
+        condition: service_healthy
+
+  menu:
+    build: .
+    command: ["bash", "menu.sh"]
+    environment:
+      - OPENAI_API_KEY
+      - VAULT_URL=http://vault:8000
     volumes:
       - ./data:/app/data
     stdin_open: true
