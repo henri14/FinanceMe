@@ -19,7 +19,7 @@ retrieved from the Vault RAG service. Token usage, cost (USD), and latency are l
 every turn.
 
 ### Mission 2 — RAG Evaluation
-Runs 8 policy questions through the vanilla LLM and the RAG enabled LLM and scores each answer 1 (pass) or 0 (fail):
+Runs policy questions through the vanilla LLM and the RAG enabled LLM and scores each answer 1 (pass) or 0 (fail):
 
 | Path | What it does |
 |---|---|
@@ -30,7 +30,7 @@ A summary table is printed at the end showing how many questions each path answe
 demonstrating the accuracy uplift from retrieval.
 
 ### Mission 3 — Operations Agent Tests
-Runs 5 loan-application scenarios through the Operations Copilot — an agentic loop that calls
+Runs loan-application scenarios through the Operations Copilot — an agentic loop that calls
 three tools (CRM lookup, policy search via the Vault, calendar slot booking) and produces a
 structured action plan. Each scenario is checked for the expected outcome (plan generated or
 requires human intervention) and reported as PASS / FAIL.
@@ -124,3 +124,52 @@ The vector store is persisted in `./data/lancedb` so ingestion does not repeat o
 Prometheus scrapes the Vault's `/metrics` endpoint every 15 seconds.
 Open **http://localhost:9090** in a browser while the platform is running to query metrics such as
 `rag_requests_total`, `rag_retrieval_latency_ms`, and `rag_response_chars_total`.
+
+
+---
+
+## Project structure
+
+```
+.
+├── corpus/                          # Policy & regulatory source documents (RAG input)
+├── config/
+│   └── config.yaml                  # Model name, RAG toggle, conversation window size
+├── data/                            # Runtime data — created automatically, git-ignored
+│   ├── lancedb/                     # Vector store (populated on first vault start)
+│   ├── chat_history.db              # SQLite conversation history
+│   ├── metrics.jsonl                # Per-turn token / cost / latency log
+│   └── copilot_traces.jsonl         # Copilot agent step-by-step reasoning traces
+├── eval/
+│   └── run.py                       # Mission 2: LLM-vs-RAG comparison runner
+├── scripts/
+│   ├── ingest_corpus.py             # Chunks and embeds corpus into LanceDB
+│   └── vault_entrypoint.sh          # Docker entrypoint: ingest if needed, then serve
+├── src/
+│   ├── cli.py                       # Typer CLI — exposes `chat` and `copilot` commands
+│   ├── core/
+│   │   ├── client.py                # Chat loop: RAG context injection, copilot routing
+│   │   ├── config.py                # Pydantic settings loaded from config.yaml
+│   │   └── metrics.py               # Token / cost / latency collector
+│   ├── extensions/
+│   │   ├── rag/
+│   │   │   ├── service.py           # FastAPI vault service — /ask and /metrics endpoints
+│   │   │   ├── retriever.py         # LanceDB cosine-similarity search
+│   │   │   ├── ingester.py          # Markdown chunker and sentence-transformer embedder
+│   │   │   ├── evaluator.py         # RAGAS-based pytest evaluator
+│   │   │   └── eval_questions.json  # Evaluation question bank (category, expected answer)
+│   │   └── tools/
+│   │       ├── agent.py             # CopilotAgent — agentic loop and structured output
+│   │       ├── models.py            # AgentPlan output schema
+│   │       └── tool_schemas.py      # OpenAI function-calling tool definitions
+│   ├── storage/
+│   │   └── db.py                    # SQLite conversation store
+│   └── tools/
+│       ├── crm.py                   # Mock CRM with sample loan applications
+│       └── calendar_tool.py         # Mock calendar — next available business slot
+├── Dockerfile
+├── docker-compose.yml               # vault · prometheus · chat · copilot · menu services
+├── menu.sh                          # Interactive mission launcher (runs inside container)
+├── prometheus.yml
+└── pyproject.toml
+```

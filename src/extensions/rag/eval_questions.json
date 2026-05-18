@@ -2,7 +2,7 @@
   {
     "id": 1,
     "category": "specific_figure",
-    "trick": false,
+    "trick": true,
     "source_docs": ["acme_lending_policy.md"],
     "section": "4",
     "question": "What is the break-cost cap specified in clause 4.3(b) of the Lending Policy?",
@@ -11,7 +11,7 @@
   {
     "id": 2,
     "category": "specific_figure",
-    "trick": false,
+    "trick": true,
     "source_docs": ["acme_product_info.md"],
     "section": "2",
     "question": "What is the establishment fee for an Acme loan product?",
@@ -20,7 +20,7 @@
   {
     "id": 3,
     "category": "procedure",
-    "trick": false,
+    "trick": true,
     "source_docs": ["acme_hardship_policy.md"],
     "section": "4",
     "question": "What action must be taken on day 7 of a hardship case per the Hardship Policy and SLA Handbook?",
@@ -70,5 +70,437 @@
     "section": "6",
     "question": "What does the NCCP Act s.117 require of credit licensees?",
     "expected": null
+  },
+  {
+    "id": 11,
+    "category": "cross_document",
+    "trick": true,
+    "source_docs": ["acme_lending_policy.md", "acme_product_info.md"],
+    "section": "4",
+    "question": "What is Acme's cooling-off period for loan contracts, and what is the establishment fee a customer would avoid by cancelling within that window?",
+    "expected": "$499"
+  },
+  {
+    "id": 12,
+    "category": "cross_document",
+    "trick": true,
+    "source_docs": ["acme_hardship_policy.md", "acme_sla_handbook.md"],
+    "section": "3",
+    "question": "What is the maximum duration of a hardship repayment pause under Acme policy, and during what hours is the Acme Operations team available to assist customers with hardship requests?",
+    "expected": "90 consecutive days"
+  },
+  {
+    "id": 13,
+    "category": "cross_document",
+    "trick": true,
+    "source_docs": ["nccp_excerpt.md", "acme_lending_policy.md"],
+    "section": "6",
+    "question": "What standard must a credit licensee meet under NCCP Act s.117, and what interest-rate sensitivity buffer does Acme apply in its serviceability assessments to meet that obligation?",
+    "expected": "2.5 percentage points"
+  },
+  {
+    "id": 14,
+    "category": "cross_document",
+    "trick": true,
+    "source_docs": ["acme_complaints_policy.md", "acme_sla_handbook.md"],
+    "section": "6",
+    "question": "How many calendar days does Acme have to resolve a complaint before a customer may escalate to AFCA, and separately, what is the SLA for completing verification of a loan application?",
+    "expected": "30 calendar days"
+  },
+  {
+    "id": 15,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_aml_kyc_policy.md"],
+    "section": "6",
+    "question": "What cash transaction amount triggers a Threshold Transaction Report (TTR) under Acme's AML/KYC Policy?",
+    "expected": "AUD $10,000"
+  },
+  {
+    "id": 16,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_aml_kyc_policy.md"],
+    "section": "6",
+    "question": "How quickly must Acme lodge a Suspicious Matter Report with AUSTRAC when a suspicion relates to terrorism financing?",
+    "expected": "24 hours"
+  },
+  {
+    "id": 17,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_broker_accreditation.md"],
+    "section": "5",
+    "question": "How many settled loans must a broker record in any rolling 12-month period to avoid automatic de-accreditation?",
+    "expected": "6"
+  },
+  {
+    "id": 18,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_broker_accreditation.md"],
+    "section": "5",
+    "question": "What minimum rolling 12-month broker-NPS score must a broker maintain to retain accreditation with Acme?",
+    "expected": "7.5"
+  },
+  {
+    "id": 19,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_business_continuity.md"],
+    "section": "4",
+    "question": "What is the Recovery Time Objective (RTO) for Tier-1 customer-facing systems under Acme's Business Continuity Plan?",
+    "expected": "4 hours"
+  },
+  {
+    "id": 20,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_business_continuity.md"],
+    "section": "5",
+    "question": "How many times per calendar year does Acme conduct disaster recovery drills?",
+    "expected": "twice"
+  },
+  {
+    "id": 21,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_collections_policy.md"],
+    "section": "3",
+    "question": "At what point in the arrears cycle does Acme issue a default notice under section 88 of the NCC?",
+    "expected": "day 30"
+  },
+  {
+    "id": 22,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_collections_policy.md"],
+    "section": "4",
+    "question": "After how many days of arrears does Acme refer an account file to an external collection agency?",
+    "expected": "day 90"
+  },
+  {
+    "id": 23,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_complaints_policy.md"],
+    "section": "3",
+    "question": "Within what timeframe must Acme acknowledge a customer complaint in writing?",
+    "expected": "1 business day"
+  },
+  {
+    "id": 24,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_complaints_policy.md"],
+    "section": "5",
+    "question": "How many calendar days does Acme have to resolve a complaint before the customer is entitled to refer it to AFCA?",
+    "expected": "30 calendar days"
+  },
+  {
+    "id": 25,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_customer_communications.md"],
+    "section": "2",
+    "question": "How many business days does it take for a customer's marketing opt-out to take effect under Acme's Customer Communications Standards?",
+    "expected": "5 business days"
+  },
+  {
+    "id": 26,
+    "category": "procedure",
+    "trick": false,
+    "source_docs": ["acme_customer_communications.md"],
+    "section": "2",
+    "question": "How can a customer opt out of Acme marketing communications under the Customer Communications Standards?",
+    "expected": "link"
+  },
+  {
+    "id": 27,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_dispute_resolution.md"],
+    "section": "2",
+    "question": "What is the maximum time limit within which a customer must lodge an internal dispute with Acme?",
+    "expected": "6 years"
+  },
+  {
+    "id": 28,
+    "category": "regulatory",
+    "trick": false,
+    "source_docs": ["acme_dispute_resolution.md"],
+    "section": "2",
+    "question": "Which legislation establishes the 6-year limitation period for lodging an internal dispute with Acme?",
+    "expected": "NCCP Act"
+  },
+  {
+    "id": 29,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_fraud_prevention.md"],
+    "section": "4",
+    "question": "Within what timeframe must a Severity 1 fraud alert be investigated under Acme's Fraud Prevention Policy?",
+    "expected": "4 business hours"
+  },
+  {
+    "id": 30,
+    "category": "policy_lookup",
+    "trick": false,
+    "source_docs": ["acme_fraud_prevention.md"],
+    "section": "4",
+    "question": "Which fraud alert severity level carries the fastest mandatory investigation window under Acme's Fraud Prevention Policy?",
+    "expected": "Severity 1"
+  },
+  {
+    "id": 31,
+    "category": "policy_lookup",
+    "trick": false,
+    "source_docs": ["acme_glossary_and_faq.md"],
+    "section": "1",
+    "question": "According to the Acme Glossary and FAQs, which document defines what a 'business day' means for SLA purposes across Acme's operations policies?",
+    "expected": "Operations SLA Handbook"
+  },
+  {
+    "id": 32,
+    "category": "regulatory",
+    "trick": false,
+    "source_docs": ["acme_glossary_and_faq.md"],
+    "section": "1",
+    "question": "What regulatory framework does Acme apply as the minimum acceptable standard for responsible-lending assessments according to the FAQ documents?",
+    "expected": "ASIC Regulatory Guide 209"
+  },
+  {
+    "id": 33,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_hardship_policy.md"],
+    "section": "2",
+    "question": "Within how many business days must Acme acknowledge a customer's hardship notice?",
+    "expected": "2 business days"
+  },
+  {
+    "id": 34,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_hardship_policy.md"],
+    "section": "2",
+    "question": "Within how many calendar days of receiving a hardship notice must Acme complete and communicate its full hardship assessment?",
+    "expected": "21 calendar days"
+  },
+  {
+    "id": 35,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_information_security.md"],
+    "section": "6",
+    "question": "What is the minimum password length and rotation frequency required for production system access under Acme's Information Security Policy?",
+    "expected": "16 characters"
+  },
+  {
+    "id": 36,
+    "category": "policy_lookup",
+    "trick": false,
+    "source_docs": ["acme_information_security.md"],
+    "section": "6",
+    "question": "Is multi-factor authentication required for all staff and contractor access to Acme production systems and customer data stores?",
+    "expected": "mandatory"
+  },
+  {
+    "id": 37,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_lending_policy.md"],
+    "section": "2",
+    "question": "What is the minimum Equifax comprehensive credit score an applicant must have to be eligible for an Acme loan?",
+    "expected": "550"
+  },
+  {
+    "id": 38,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_lending_policy.md"],
+    "section": "3",
+    "question": "What living-expense buffer does Acme apply when a customer's declared living expenses fall below the HEM benchmark?",
+    "expected": "10%"
+  },
+  {
+    "id": 39,
+    "category": "regulatory",
+    "trick": false,
+    "source_docs": ["acme_marketing_terms.md"],
+    "section": "3",
+    "question": "How close to the headline interest rate must a comparison rate appear in Acme marketing material under the Comparison-Rate Disclosure requirements?",
+    "expected": "5 percentage points"
+  },
+  {
+    "id": 40,
+    "category": "policy_lookup",
+    "trick": false,
+    "source_docs": ["acme_marketing_terms.md"],
+    "section": "3",
+    "question": "What additional rate disclosure must accompany any indicative interest rate shown in Acme marketing material?",
+    "expected": "comparison rate"
+  },
+  {
+    "id": 41,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_privacy_policy.md"],
+    "section": "7",
+    "question": "For how long does Acme retain customer records after a loan is closed under its Privacy Policy?",
+    "expected": "7 years"
+  },
+  {
+    "id": 42,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_privacy_policy.md"],
+    "section": "9",
+    "question": "Within what timeframe must Acme notify the OAIC after assessing a data breach as eligible?",
+    "expected": "72 hours"
+  },
+  {
+    "id": 43,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_product_info.md"],
+    "section": "1",
+    "question": "What is the maximum personal loan amount available under Acme's loan products?",
+    "expected": "$50,000"
+  },
+  {
+    "id": 44,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_product_info.md"],
+    "section": "1",
+    "question": "What loan terms are available for Acme personal loan products?",
+    "expected": "3, 5, or 7 years"
+  },
+  {
+    "id": 45,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_quarterly_strategy_q3_2025.md"],
+    "section": "2",
+    "question": "What is Acme's Q3 FY26 origination target for settled personal-loan volume?",
+    "expected": "$185 million"
+  },
+  {
+    "id": 46,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_quarterly_strategy_q3_2025.md"],
+    "section": "2",
+    "question": "By what percentage does the Q3 FY26 origination target increase over the prior quarter?",
+    "expected": "12%"
+  },
+  {
+    "id": 47,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_sla_handbook.md"],
+    "section": "2",
+    "question": "What is the SLA for completing verification of a loan application, measured from when all requested documents have been received?",
+    "expected": "3 business days"
+  },
+  {
+    "id": 48,
+    "category": "procedure",
+    "trick": false,
+    "source_docs": ["acme_sla_handbook.md"],
+    "section": "3",
+    "question": "On which day of the verification queue does an application automatically escalate for manual review by an Operations Lead?",
+    "expected": "Day 5"
+  },
+  {
+    "id": 49,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_training_module_credit.md"],
+    "section": "8",
+    "question": "What is the minimum passing score for the responsible-lending post-test in Acme's Credit Training Module?",
+    "expected": "80%"
+  },
+  {
+    "id": 50,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_training_module_credit.md"],
+    "section": "8",
+    "question": "How many attempts does a learner have to pass the responsible-lending post-test before re-training is required?",
+    "expected": "3"
+  },
+  {
+    "id": 51,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_training_module_ops.md"],
+    "section": "5",
+    "question": "For how long are Acme customer call recordings retained according to the Operations Training Module?",
+    "expected": "24 months"
+  },
+  {
+    "id": 52,
+    "category": "policy_lookup",
+    "trick": false,
+    "source_docs": ["acme_training_module_ops.md"],
+    "section": "5",
+    "question": "Who is permitted to access Acme's customer call recordings according to the Operations Training Module?",
+    "expected": "QA, Compliance, and the customer"
+  },
+  {
+    "id": 53,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_vendor_management.md"],
+    "section": "4",
+    "question": "How frequently must Tier-1 critical vendors undergo a full risk re-assessment under Acme's Vendor Management Policy?",
+    "expected": "annually"
+  },
+  {
+    "id": 54,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["acme_vendor_management.md"],
+    "section": "4",
+    "question": "What is the risk re-assessment frequency for Tier-2 vendors under Acme's Vendor Management Policy?",
+    "expected": "24 months"
+  },
+  {
+    "id": 55,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["asic_rg209_synthesis.md"],
+    "section": "1",
+    "question": "How many inquiry, verification, and assessment obligations must be discharged to satisfy the not-unsuitable standard under ASIC RG 209?",
+    "expected": "eight"
+  },
+  {
+    "id": 56,
+    "category": "specific_figure",
+    "trick": false,
+    "source_docs": ["asic_rg209_synthesis.md"],
+    "section": "1",
+    "question": "What is the required retention period for suitability assessments under ASIC RG 209, and must they be provided to the consumer free of charge?",
+    "expected": "7 years"
+  },
+  {
+    "id": 57,
+    "category": "regulatory",
+    "trick": false,
+    "source_docs": ["nccp_excerpt.md"],
+    "section": "1",
+    "question": "Under which ASIC section can the regulator require a credit licensee to produce records of compliance with responsible-lending obligations?",
+    "expected": "section 912D"
+  },
+  {
+    "id": 58,
+    "category": "regulatory",
+    "trick": false,
+    "source_docs": ["nccp_excerpt.md"],
+    "section": "1",
+    "question": "Where in the NCCP Act are civil penalties for contraventions of responsible-lending obligations prescribed?",
+    "expected": "Schedule 2"
   }
 ]
